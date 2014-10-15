@@ -22,7 +22,7 @@ public class WordNetTest {
 			for (int i = 0; i < synsets.length; i++) {
 				nounSynset = (NounSynset) (synsets[i]);
 				hyponyms = nounSynset.getHyponyms();
-				System.out.println(nounSynset.getWordForms()[0] + ": "
+				System.out.println(nounSynset.getWordForms()[0] + ": ("
 						+ nounSynset.getDefinition() + ") has " + hyponyms.length
 						+ " hyponyms");
 			}
