@@ -128,8 +128,7 @@ public enum PartOfSpeechTags {
 			}
 		}
 
-		throw new IllegalArgumentException("Unknown part of speech: '" + value
-				+ "'.");
+		return null;
 	}
 	
 	public boolean isNoun() {
@@ -138,5 +137,9 @@ public enum PartOfSpeechTags {
 	
 	public boolean isVerb() {
 		return this.getTag().charAt(0) == 'V';
+	}
+	
+	public boolean isAdjective() {
+		return this.getTag().charAt(0) == 'J';
 	}
 }

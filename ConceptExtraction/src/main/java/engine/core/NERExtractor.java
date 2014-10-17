@@ -18,7 +18,7 @@ import edu.stanford.nlp.pipeline.StanfordCoreNLP;
 import edu.stanford.nlp.util.CoreMap;
 import engine.util.NamedEntityTags;
 
-public class NERExtractor implements Extractor {
+public class NERExtractor extends Extractor {
 
 	private StanfordCoreNLP annotator;
 
@@ -28,10 +28,9 @@ public class NERExtractor implements Extractor {
 		annotator = new StanfordCoreNLP(props);
 	}
 
-	public Set<String> getConcepts(String question) {
-		if (question == null || question.length() == 0)
-			throw new IllegalArgumentException("Invalid question: " + question);
+	public ClassifiedTokens process(String question) {
 
+		ClassifiedTokens ct = new ClassifiedTokens();
 		Set<String> concepts = new HashSet<String>();
 		Annotation questionAnnotations = new Annotation(question);
 		annotator.annotate(questionAnnotations);
@@ -39,8 +38,13 @@ public class NERExtractor implements Extractor {
 				.get(SentencesAnnotation.class);
 
 		List<List<CoreLabel>> llcl = new ArrayList<List<CoreLabel>>();
+		Set<String> allTokens = new HashSet<String>();
 		for (CoreMap sentence : sentences) {
-			llcl.add(sentence.get(TokensAnnotation.class));
+			List<CoreLabel> coreLabels = sentence.get(TokensAnnotation.class);
+			for (CoreLabel coreLabel : coreLabels) {
+				allTokens.add(coreLabel.getString(TextAnnotation.class)); 
+			}
+			llcl.add(coreLabels);
 		}
 
 		HashMap<String, HashMap<String, Integer>> entities = extractEntities(llcl);
@@ -49,10 +53,14 @@ public class NERExtractor implements Extractor {
 				concepts.addAll(entities.get(tag.toString()).keySet());
 			}
 		}
-		return concepts;
+
+		ct.setConcepts(concepts);
+		allTokens.removeAll(concepts);
+		ct.setNotConcepts(allTokens);
+		return ct;
 	}
 
-	protected HashMap<String, HashMap<String, Integer>> extractEntities(
+	private HashMap<String, HashMap<String, Integer>> extractEntities(
 			List<List<CoreLabel>> llcl) {
 
 		HashMap<String, HashMap<String, Integer>> entities = new HashMap<String, HashMap<String, Integer>>();
