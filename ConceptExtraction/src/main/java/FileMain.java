@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import engine.core.Extractor;
+import engine.core.HybridExtractor;
 import engine.core.NERExtractor;
 import engine.core.WordNetExtractor;
 import engine.eval.IREvaluator;
@@ -18,6 +19,7 @@ import engine.util.FileLinesReader;
  * 
  */
 public class FileMain {
+
 	public static void main(String[] args) throws FileNotFoundException {
 		List<String> questions = FileLinesReader.readLines(new File(
 				"samples.input"));
@@ -36,8 +38,8 @@ public class FileMain {
 		}
 
 		runNER(questions, concepts);
-
 		runWordNet(questions, concepts);
+		runHybrid(questions, concepts);
 	}
 
 	private static void runNER(List<String> questions,
@@ -58,6 +60,18 @@ public class FileMain {
 		IREvaluator evaluator = new IREvaluator(questions, concepts);
 		evaluator.eval(extractor);
 		System.out.println("Results for WordNet");
+		System.out.println("Acc = " + evaluator.getAccuracy());
+		System.out.println("Pre = " + evaluator.getPrecision());
+		System.out.println("Rec = " + evaluator.getRecall());
+		System.out.println("FMe = " + evaluator.getFMeasure());
+	}
+	
+	private static void runHybrid(List<String> questions,
+			List<List<String>> concepts) {
+		Extractor extractor = new HybridExtractor();
+		IREvaluator evaluator = new IREvaluator(questions, concepts);
+		evaluator.eval(extractor);
+		System.out.println("Results for Hybrid");
 		System.out.println("Acc = " + evaluator.getAccuracy());
 		System.out.println("Pre = " + evaluator.getPrecision());
 		System.out.println("Rec = " + evaluator.getRecall());

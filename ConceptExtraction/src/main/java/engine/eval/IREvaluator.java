@@ -56,25 +56,30 @@ public class IREvaluator {
 		int N = questions.size();
 		for (int i = 0; i < N; i++) {
 			String q = questions.get(i);
-			Set<String> gtConcepts = new HashSet<String>(concepts.get(i));
+			try {
+				Set<String> gtConcepts = new HashSet<String>(concepts.get(i));
 
-			// process the current question
-			ClassifiedTokens tokens = extractor.classifyQuestionTokens(q);
-			Collection<String> retrieved = tokens.getConcepts();
-			Collection<String> notRetrieved = tokens.getNotConcepts();
+				// process the current question
+				ClassifiedTokens tokens = extractor.classifyQuestionTokens(q);
+				Collection<String> retrieved = tokens.getConcepts();
+				Collection<String> notRetrieved = tokens.getNotConcepts();
 
-			for (String retCon : retrieved) {
-				if (gtConcepts.contains(retCon))
-					truePos++;
-				else
-					falsePos++;
-			}
+				for (String retCon : retrieved) {
+					if (gtConcepts.contains(retCon))
+						truePos++;
+					else
+						falsePos++;
+				}
 
-			for (String nRetCon : notRetrieved) {
-				if (gtConcepts.contains(nRetCon))
-					falseNeg++;
-				else
-					trueNeg++;
+				for (String nRetCon : notRetrieved) {
+					if (gtConcepts.contains(nRetCon))
+						falseNeg++;
+					else
+						trueNeg++;
+				}
+			} catch (Exception e) {
+				System.err.println("Question #" + i + ": " + q);
+				e.printStackTrace();
 			}
 		}
 	}

@@ -26,8 +26,7 @@ public enum NamedEntityTags {
 			}
 		}
 
-		throw new IllegalArgumentException("Unknown named entity: '" + value
-				+ "'.");
+		return null;
 	}
 
 }
