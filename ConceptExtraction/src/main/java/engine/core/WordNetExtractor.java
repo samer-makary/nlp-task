@@ -23,7 +23,7 @@ import engine.util.PartOfSpeechTags;
 
 /**
  * Initial extract based on <b>WordNet</b>. This approach still needs a lot of
- * improvement, but it should some promising results. <br/>
+ * improvement, but it showed some promising results. <br/>
  * This approach tries to select tokens with the highest information content IC
  * and specificity. <br/>
  * In order to achieve that, it uses WordNet graph to extract all concepts

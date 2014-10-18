@@ -48,10 +48,10 @@ public class FileMain {
 		IREvaluator evaluator = new IREvaluator(questions, concepts);
 		evaluator.eval(extractor);
 		System.out.println("Results for NER:");
-		System.out.println("Acc = " + evaluator.getAccuracy());
-		System.out.println("Pre = " + evaluator.getPrecision());
-		System.out.println("Rec = " + evaluator.getRecall());
-		System.out.println("FMe = " + evaluator.getFMeasure());
+		System.out.println(String.format("Accuracy = %.4f", evaluator.getAccuracy()));
+		System.out.println(String.format("Precision = %.4f", evaluator.getPrecision()));
+		System.out.println(String.format("Recall = %.4f", evaluator.getRecall()));
+		System.out.println(String.format("F-Measure = %.4f", evaluator.getFMeasure()));
 	}
 
 	private static void runWordNet(List<String> questions,
@@ -60,10 +60,10 @@ public class FileMain {
 		IREvaluator evaluator = new IREvaluator(questions, concepts);
 		evaluator.eval(extractor);
 		System.out.println("Results for WordNet");
-		System.out.println("Acc = " + evaluator.getAccuracy());
-		System.out.println("Pre = " + evaluator.getPrecision());
-		System.out.println("Rec = " + evaluator.getRecall());
-		System.out.println("FMe = " + evaluator.getFMeasure());
+		System.out.println(String.format("Accuracy = %.4f", evaluator.getAccuracy()));
+		System.out.println(String.format("Precision = %.4f", evaluator.getPrecision()));
+		System.out.println(String.format("Recall = %.4f", evaluator.getRecall()));
+		System.out.println(String.format("F-Measure = %.4f", evaluator.getFMeasure()));
 	}
 	
 	private static void runHybrid(List<String> questions,
@@ -72,9 +72,9 @@ public class FileMain {
 		IREvaluator evaluator = new IREvaluator(questions, concepts);
 		evaluator.eval(extractor);
 		System.out.println("Results for Hybrid");
-		System.out.println("Acc = " + evaluator.getAccuracy());
-		System.out.println("Pre = " + evaluator.getPrecision());
-		System.out.println("Rec = " + evaluator.getRecall());
-		System.out.println("FMe = " + evaluator.getFMeasure());
+		System.out.println(String.format("Accuracy = %.4f", evaluator.getAccuracy()));
+		System.out.println(String.format("Precision = %.4f", evaluator.getPrecision()));
+		System.out.println(String.format("Recall = %.4f", evaluator.getRecall()));
+		System.out.println(String.format("F-Measure = %.4f", evaluator.getFMeasure()));
 	}
 }
