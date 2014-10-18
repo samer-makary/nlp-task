@@ -5,6 +5,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import engine.core.Extractor;
+import engine.core.HybridExtractor;
 import engine.core.NERExtractor;
 import engine.core.WordNetExtractor;
 
@@ -19,11 +20,13 @@ public class GUIMain {
 
 	private static final int POS_NER = 0;
 	private static final int WORD_NET = 1;
+	private static final int HYBRID = 2;
 
 	public static void main(String[] args) {
 		Map<String, Integer> algos = new HashMap<String, Integer>();
 		algos.put("POS + NER", POS_NER);
 		algos.put("WordNet", WORD_NET);
+		algos.put("Hybrid", HYBRID);
 		String[] algosArr = new String[algos.size()];
 		int i = 0;
 		for (String s : algos.keySet())
@@ -42,9 +45,11 @@ public class GUIMain {
 		case POS_NER:
 			extractor = new NERExtractor();
 			break;
-
 		case WORD_NET:
 			extractor = new WordNetExtractor();
+			break;
+		case HYBRID:
+			extractor = new HybridExtractor();
 			break;
 		}
 
