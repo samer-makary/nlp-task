@@ -9,6 +9,14 @@ import engine.core.WordNetExtractor;
 import engine.eval.IREvaluator;
 import engine.util.FileLinesReader;
 
+/**
+ * This class will run both algorithm on the sample input and then use the
+ * {@link IREvaluator} to compute the Accuracy, Precision, Recall, & FMeasure of
+ * each approach.
+ * 
+ * @author Samer
+ * 
+ */
 public class FileMain {
 	public static void main(String[] args) throws FileNotFoundException {
 		List<String> questions = FileLinesReader.readLines(new File(
@@ -26,30 +34,30 @@ public class FileMain {
 			}
 			concepts.add(cons);
 		}
-		
-		System.out.println("Results for NER:");
+
 		runNER(questions, concepts);
-		
-		System.out.println("Results for WordNet");
+
 		runWordNet(questions, concepts);
 	}
-	
+
 	private static void runNER(List<String> questions,
 			List<List<String>> concepts) {
 		Extractor extractor = new NERExtractor();
 		IREvaluator evaluator = new IREvaluator(questions, concepts);
 		evaluator.eval(extractor);
+		System.out.println("Results for NER:");
 		System.out.println("Acc = " + evaluator.getAccuracy());
 		System.out.println("Pre = " + evaluator.getPrecision());
 		System.out.println("Rec = " + evaluator.getRecall());
 		System.out.println("FMe = " + evaluator.getFMeasure());
 	}
-	
+
 	private static void runWordNet(List<String> questions,
 			List<List<String>> concepts) {
 		Extractor extractor = new WordNetExtractor();
 		IREvaluator evaluator = new IREvaluator(questions, concepts);
 		evaluator.eval(extractor);
+		System.out.println("Results for WordNet");
 		System.out.println("Acc = " + evaluator.getAccuracy());
 		System.out.println("Pre = " + evaluator.getPrecision());
 		System.out.println("Rec = " + evaluator.getRecall());

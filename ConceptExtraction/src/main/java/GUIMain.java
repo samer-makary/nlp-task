@@ -8,6 +8,13 @@ import engine.core.Extractor;
 import engine.core.NERExtractor;
 import engine.core.WordNetExtractor;
 
+/**
+ * The class displays simple input dialogs to read question input from the user
+ * and display the output.
+ * 
+ * @author Samer
+ * 
+ */
 public class GUIMain {
 
 	private static final int POS_NER = 0;
@@ -27,6 +34,9 @@ public class GUIMain {
 				"Which algorithm would like to use?", "Algorithm",
 				JOptionPane.QUESTION_MESSAGE, null, algosArr, algosArr[0]);
 
+		if (algo == null)
+			System.exit(0);
+
 		Extractor extractor = null;
 		switch (algos.get(algo)) {
 		case POS_NER:
@@ -39,7 +49,7 @@ public class GUIMain {
 		}
 
 		if (extractor == null)
-			return;
+			System.exit(0);
 
 		boolean keepRunning = true;
 		do {
@@ -52,5 +62,8 @@ public class GUIMain {
 						.classifyQuestionTokens(question).getConcepts());
 			}
 		} while (keepRunning);
+
+		System.exit(0);
+
 	}
 }

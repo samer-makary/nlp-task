@@ -21,8 +21,29 @@ import edu.stanford.nlp.pipeline.StanfordCoreNLP;
 import edu.stanford.nlp.util.CoreMap;
 import engine.util.PartOfSpeechTags;
 
+/**
+ * Initial extract based on <b>WordNet</b>. This approach still needs a lot of
+ * improvement, but it should some promising results. <br/>
+ * This approach tries to select tokens with the highest information content IC
+ * and specificity. <br/>
+ * In order to achieve that, it uses WordNet graph to extract all concepts
+ * related to every token. After that it finds that depth of every token in the
+ * knowledge graph. The deeper the concept, the more its IC. <br/>
+ * After that it averages the depth of all token concepts, finally it selects
+ * tokens with highest average depth relative to the rest of the tokens in the
+ * question. <br/>
+ * Final step of refinement that should some minor improvement, it groups
+ * selected consecutive token that share the same POS.
+ * 
+ * @author Samer
+ * 
+ */
 public class WordNetExtractor extends Extractor {
 
+	/**
+	 * Factor that specifies how much above-average that token average-depth
+	 * needs to be, in order for the extractor to select it as a concept.
+	 */
 	public static final double FACTOR_OF_AVG_DEPTH = 1.5;
 
 	private StanfordCoreNLP annotator;
@@ -119,6 +140,12 @@ public class WordNetExtractor extends Extractor {
 		return concepts;
 	}
 
+	/**
+	 * Wrapper class that holds every token information.
+	 * 
+	 * @author Samer
+	 * 
+	 */
 	private class TokenData {
 		int index;
 		PartOfSpeechTags pos;

@@ -18,6 +18,14 @@ import edu.stanford.nlp.pipeline.StanfordCoreNLP;
 import edu.stanford.nlp.util.CoreMap;
 import engine.util.NamedEntityTags;
 
+/**
+ * This extractor simply uses Stanford's CoreNLP library to POS-tag and NER
+ * tokens in the question string. After that groups tokens that are of the same
+ * NE together and return the output as question tokens.
+ * 
+ * @author Samer
+ * 
+ */
 public class NERExtractor extends Extractor {
 
 	private StanfordCoreNLP annotator;
@@ -42,7 +50,7 @@ public class NERExtractor extends Extractor {
 		for (CoreMap sentence : sentences) {
 			List<CoreLabel> coreLabels = sentence.get(TokensAnnotation.class);
 			for (CoreLabel coreLabel : coreLabels) {
-				allTokens.add(coreLabel.getString(TextAnnotation.class)); 
+				allTokens.add(coreLabel.getString(TextAnnotation.class));
 			}
 			llcl.add(coreLabels);
 		}
